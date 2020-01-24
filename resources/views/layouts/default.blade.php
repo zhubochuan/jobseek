@@ -7,6 +7,7 @@
 </head>
 
 <body>
+    <script src="{{ mix('js/app.js') }}"></script>
     @include('layouts._header')
     <div class="container">
         @yield('content')

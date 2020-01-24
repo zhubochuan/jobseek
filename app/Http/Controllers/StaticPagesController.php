@@ -2,36 +2,163 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Job;
+use App\Models\Classification;
+use App\Models\Type;
 use Illuminate\Http\Request;
 
 class StaticPagesController extends Controller
 {
     function __construct()
     {
-        $this->jobs = [
-            1 =>  ['id' => 1, 'title' => 'Housekeeping Supervisor', 'classification' => 'Machinery/Heavy Industry', 'type' => 'volunteer', 'company logo' => 'images/logo1.png', 'company name' => 'Jast Inc', 'city' => 'Sydney|Five Dock', 'company size' => '10-19people'],
-            2 => ['id' => 2, 'title' => 'Data Entry Operator', 'classification' => 'Telecommunication', 'type' => 'Contract', 'company logo' => '', 'company name' => 'Jast Inc', 'city' => 'Sydney|Maroubra', 'company size' => '10-19people'],
-            3 => ['id' => 3, 'title' => 'Recreational Vehicle Service Technician', 'classification' => 'Land/Property Management', 'type' => 'volunteer', 'company logo' => '', 'company name' => 'Jast Inc', 'city' => 'Sydney|Mcmahons Point', 'company size' => '10-19people'],
-            4 =>  ['id' => 4, 'title' => 'Funeral Director', 'classification' => 'Furniture/Appliance/Toys', 'type' => 'Contract', 'company logo' => '', 'company name' => 'Jast Inc', 'city' => 'Sydney|Osborne Park', 'company size' => '10-19people'],
-            5 =>  ['id' => 5, 'title' => 'title5', 'classification' => 'classification5', 'type' => 'type5', 'company logo' => '', 'company name' => 'company name 5', 'city' => 'Sydney|Five Dock', 'company size' => '10-19people']
-        ];
     }
 
-    public function home()
+    public function home()  //list job on home page
     {
-        return view('static_pages/home',['jobs'=>$this->jobs]);
+        //Every time back to the home page, reset selected classification history and type history
+        $classification = new Classification;
+        $selected_class = Classification::find(1);
+        if ($selected_class != null) {
+            $selected_class->name = null;
+            $selected_class->save();
+        }
+        ////type reset
+        $type = new Type;
+        $selected_type = Type::find(1);
+        if ($selected_type != null) {
+            $selected_type->name = null;
+            $selected_type->save();
+        }
+
+
+        $jobs = Job::orderBy('created_at', 'desc')
+            ->limit(5)
+            ->get();
+        return view('static_pages/home', compact('jobs'));
     }
 
-    public function job()
+    public function job() //job page
     {
-        return view('static_pages/job');
+        //Every time back to the home page, reset selected classification histroy
+        $classification = new Classification;
+        $selected_class = Classification::find(1);
+        if ($selected_class != null) {
+            $selected_class->name = null;
+            $selected_class->save();
+        }
+        ////type reset
+        $type = new Type;
+        $selected_type = Type::find(1);
+        if ($selected_type != null) {
+            $selected_type->name = null;
+            $selected_type->save();
+        }
+
+        $jobs = Job::paginate(6);
+        $cjob = Job::distinct('classification')->orderBy('classification')->get();
+        $tjob = Job::distinct('type')->orderBy('type')->get();
+        return view('static_pages/job', compact('jobs', 'cjob', 'tjob'));
     }
-    public function jobDetail($id)
+
+    public function classjob($class) //show job as classification
     {
-        return view('static_pages/jobDetail',['jobs'=>$this->jobs[$id]]);
+        //store selected classification into db
+        $classification = new Classification;
+        $selected = Classification::find(1);
+        if ($selected == null) {
+            $classification->name = $class;
+            $classification->save();
+        } else {
+            $selected->name = $class;
+            $selected->save();
+        }
+        $jobs = Job::where('classification', $class)
+            ->paginate(6);
+
+        $cjob = Job::distinct('classification')->orderBy('classification')->get();
+        $tjob = Job::distinct('type')->orderBy('type')->get();
+
+        return view('static_pages/job', compact('jobs', 'cjob', 'tjob'));
     }
-    public function about()
+
+    public function typejob($type) //show job as type under selected classification
+    {
+        //store selected type into db
+        $t = new Type;
+        $selected = Type::find(1);
+        if ($selected == null) {
+            $t->name = $type;
+            $t->save();
+        } else {
+            $selected->name = $type;
+            $selected->save();
+        }
+
+
+        //if class==null or if class!=null
+        $selected = Classification::find(1);
+        if ($selected == null) {
+            $jobs = Job::where('type', $type)
+                ->paginate(6);
+        } else {
+            $jobs = Job::where('type', $type)
+                ->where('classification', $selected['name'])
+                ->paginate(6);
+        }
+        $cjob = Job::distinct('classification')->orderBy('classification')->get();
+        $tjob = Job::distinct('type')->orderBy('type')->get();
+
+        return view('static_pages/job', compact('jobs', 'cjob', 'tjob'));
+    }
+
+    public function jobDetail($id)   //after click job title link
+    {
+        $jobs = Job::Where('id', $id)
+            ->get();
+        return view('static_pages/jobDetail', compact('jobs'));
+    }
+    public function about()  //about page
     {
         return view('static_pages/about');
+    }
+
+    public function search(Request $request)  //search function, under selected classification and type
+    {
+        $builder = Job::query();
+
+        //title or company name
+        if ($search = $request->input('title_name')) {
+            $like = '%' . $search . '%';
+            $builder->where(function ($query) use ($like) {
+                $query->where('title', 'like', $like)
+                    ->orWhere('company name', 'like', $like);
+            });
+        }
+
+        //suburb
+        if ($search2 = $request->input('city')) {
+            $builder->where('city or suburb', $search2);
+        }
+
+        //classification
+        $classification = new Classification;
+        $selected_class = Classification::find(1)->name;
+        if ($selected_class != null) {
+            $builder->where('classification', $selected_class);
+        }
+
+        //type
+        $type = new Type;
+        $selected_type = Type::find(1)->name;
+        if ($selected_type != null) {
+            $builder->where('type', $selected_type);
+        }
+
+
+        $jobs = $builder->paginate(6);
+        $cjob = Job::distinct('classification')->orderBy('classification')->get();
+        $tjob = Job::distinct('type')->orderBy('type')->get();
+
+        return view('static_pages/job', compact('jobs', 'cjob', 'tjob'));
     }
 }

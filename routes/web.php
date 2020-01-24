@@ -15,6 +15,9 @@ Route::get('/', 'StaticPagesController@home')->name('/');
 Route::get('/job', 'StaticPagesController@job')->name('job');
 Route::get('/jobDetail/{id}', 'StaticPagesController@jobDetail')->name('jobDetail');
 Route::get('/about', 'StaticPagesController@about')->name('about');
+Route::get('/classjob/{class}','StaticPagesController@classjob')->name('classification_job');
+Route::get('/typejob/{type}','StaticPagesController@typejob')->name('type_classification_job');
+Route::post('/search','StaticPagesController@search')->name('search');
 
 Auth::routes();
 

@@ -3,7 +3,7 @@
     <div class="container">
         <div class="row">
             <div class="col">
-                <img src="images/kola_icon.png" alt="icon">
+                <img src="{{url('images/kola_icon.png')}}" alt="icon">
                 <div>
                     Find Your Next Job Here
                 </div>
