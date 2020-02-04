@@ -12,12 +12,15 @@
             </div>
             <div class="col2">
                 <h2>Job Detail</h2>
-                <div><img class="logo" src="{{url($job['company logo'])}}" alt="company logo"></div>
-                Posted:{{$job['craeted_at']}}<br>
+                <div><img class="logo" src="" alt="company logo"></div>
+                Posted:{{$job['created_at']}}<br>
                 <img class="icon" src="{{url('images/pin.png')}}" alt="">{{$job['city or suburb']}}<br>
                 Classification: {{$job['classification']}}<br>
                 <span class="badge-primary">{{$job['type']}}</span>
+                <hr>
+                @include('sections.save')
             </div>
+
             @endforeach
         </div>
     </div>

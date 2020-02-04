@@ -26,6 +26,8 @@
                                 <img src="{{url('images/people.png')}}" alt="" class="icon"> {{ $job['company size'] }} &nbsp; people<br>
                             </li>
                         </ul>
+                        <!----->
+                        @include('sections.save')
                     </div>
                     @endforeach
                 </div>
@@ -40,8 +42,13 @@
                 <div>
                     <strong>Selected classification:</strong>
                     @php
-                    $current=DB::table('classification')->first()->name;
+
+                    $current=DB::table('classification')->first();
+                    if($current!=null)
+                    {
+                    $current=$current->name;
                     echo $current;
+                    }
                     @endphp
                 </div>
                 @include('sections.classification')
@@ -51,8 +58,12 @@
                 <div>
                     <strong>Selected Type:</strong>
                     @php
-                    $current=DB::table('types')->first()->name;
+                    $current=DB::table('types')->first();
+                    if($current!=null)
+                    {
+                    $current=$current->name;
                     echo $current;
+                    }
                     @endphp
                 </div>
                 @include('sections.type')

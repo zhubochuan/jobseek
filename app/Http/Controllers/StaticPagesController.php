@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use App\Models\Job;
 use App\Models\Classification;
 use App\Models\Type;
@@ -13,8 +14,10 @@ class StaticPagesController extends Controller
     {
     }
 
-    public function home()  //list job on home page
+    public function home(Job $job, Request $request)  //list 5 latest jobs on home page
     {
+      
+
         //Every time back to the home page, reset selected classification history and type history
         $classification = new Classification;
         $selected_class = Classification::find(1);
@@ -29,7 +32,6 @@ class StaticPagesController extends Controller
             $selected_type->name = null;
             $selected_type->save();
         }
-
 
         $jobs = Job::orderBy('created_at', 'desc')
             ->limit(5)
@@ -160,5 +162,38 @@ class StaticPagesController extends Controller
         $tjob = Job::distinct('type')->orderBy('type')->get();
 
         return view('static_pages/job', compact('jobs', 'cjob', 'tjob'));
+    }
+
+    //save jobs
+    public function save($id, Request $request)
+    {
+
+        $savejob = Job::Where('id', $id)
+            ->get();
+        $user = $request->user();
+        if ($user->saveJobs()->find($id)) {
+            return [];
+        }
+
+        $user->saveJobs()->attach($savejob);
+
+        return [];
+    }
+    //cancel jobs
+    public function dissave($id, Request $request)
+    {
+        $savejob = Job::Where('id', $id)
+            ->get();
+        $user = $request->user();
+        $user->saveJobs()->detach($savejob);
+
+        return [];
+    }
+    //display user saved jobs
+    public function displaySave(Request $request)
+    {
+        $jobs = $request->user()->saveJobs()->paginate(16);
+
+        return view('sections.saved', ['jobs' => $jobs]);
     }
 }

@@ -28,6 +28,7 @@
                 <img src="images/people.png" alt="" class="icon"> {{ $job['company size'] }} &nbsp; people<br>
             </li>
         </ul>
+        @include('sections.save')
     </div>
     @endforeach
 

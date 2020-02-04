@@ -1,13 +1,18 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-primary">
-    <a class="navbar-brand" href="{{ route('/') }}" style="color: white;">Kola job</a>
+    <a class="navbar-brand" href="{{route('backhome')}}" style="color: white;">Employer Page</a>
+
+    <!----job functions--->
+
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="{{ route('/') }}" style="color: white;">Home</a>
+            <li class="nav-itme">
+                <a class="nav-link" href="{{ route('backhome') }}" style="color: white;"><span class="border border-info" style="padding: 2px;font-size:20px;">Home</span></a>
             </li>
+
             <li class="nav-item active">
-                <a class="nav-link" href="{{ route('job') }}" style="color: white;">Jobs</a>
+                <a class="nav-link" href="{{ route('postjob') }}" style="color: white;"><span class="border border-info" style="padding: 2px;font-size:20px;">post a job</span></a>
             </li>
+
         </ul>
 
 
@@ -28,7 +33,6 @@
                 <span class="border border-info" style="padding:2px;color:white;">{{ Auth::user()->name }}</span>&nbsp;&nbsp;
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="{{route('jobs.saved')}}">Saved Jobs</a>
                 <a class="dropdown-item" href="{{ url('/logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                     logout
                 </a>
