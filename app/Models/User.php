@@ -49,4 +49,19 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Job::class);
     }
+    //working experience
+    public function experience()
+    {
+        return $this->hasMany(Experience::class);
+    }
+    //file , resumes
+    public function files()
+    {
+        return $this->hasMany(File::class);
+    }
+    //profile
+    public function profiles()
+    {
+        return $this->hasOne(Profile::class);
+    }
 }

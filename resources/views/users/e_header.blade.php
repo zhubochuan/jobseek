@@ -33,6 +33,11 @@
                 <span class="border border-info" style="padding:2px;color:white;">{{ Auth::user()->name }}</span>&nbsp;&nbsp;
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+
+                <a href="{{route('backhome')}}" class="dropdown-item">MyHomePage</a>
+                <a href="" class="dropdown-item" href="">Jobs</a>
+                <a href="" class="dropdown-item" href="">Applications</a>
+
                 <a class="dropdown-item" href="{{ url('/logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                     logout
                 </a>

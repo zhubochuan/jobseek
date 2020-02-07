@@ -4,6 +4,7 @@
 <head>
     <title>@yield('title', 'Kola App')</title>
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+    <script type="text/javascript" src="{{asset('js/vue.js')}}"></script>
 </head>
 
 <body>

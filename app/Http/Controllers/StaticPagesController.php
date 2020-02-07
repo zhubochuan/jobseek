@@ -179,7 +179,7 @@ class StaticPagesController extends Controller
 
         return [];
     }
-    //cancel jobs
+    //remove jobs
     public function dissave($id, Request $request)
     {
         $savejob = Job::Where('id', $id)

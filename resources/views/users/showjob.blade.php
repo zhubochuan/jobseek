@@ -10,7 +10,7 @@
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">
                     <img src="{{url('images/type.png')}}" class="icon">
-                    <a href="#">Profile</a></li>
+                    <a href="{{route('backhome')}}">Profile</a></li>
                 <li class="list-group-item">
                     <img src="{{url('images/people.png')}}" class="icon">
                     <a href="{{route('jobs.show',['jobs'])}}">jobs</a></li>
