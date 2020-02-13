@@ -30,6 +30,7 @@
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <a class="dropdown-item" href="{{route('seeker.home')}}"> <img class="icon" src="{{url('images/home.png')}} " alt="">My Profile</a>
                 <a class="dropdown-item" href="{{route('jobs.saved')}}"><img class="icon" src="{{url('images/folder.png')}} " alt="">Saved Jobs</a>
+                <a class="dropdown-item" href="{{route('jobs.applied')}}"><img class="icon" src="{{url('images/folder.png')}} " >Application</a>
 
                 <a class="dropdown-item" href="{{ url('/logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                     logout

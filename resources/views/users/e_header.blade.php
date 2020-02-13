@@ -35,8 +35,8 @@
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 
                 <a href="{{route('backhome')}}" class="dropdown-item">MyHomePage</a>
-                <a href="" class="dropdown-item" href="">Jobs</a>
-                <a href="" class="dropdown-item" href="">Applications</a>
+                <a href="{{route('eshow')}}" class="dropdown-item">Jobs</a>
+                <a href="{{route('viewApply')}}" class="dropdown-item">Applications</a>
 
                 <a class="dropdown-item" href="{{ url('/logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                     logout

@@ -16,7 +16,7 @@
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" name="log_employer" id="log_employer" value="1">
                                     <label class="form-check-label" for="log_employer">
-                                        I am an employer 
+                                        I am an employer
                                     </label>
 
                                 </div>
@@ -76,6 +76,11 @@
                                     {{ __('Forgot Your Password?') }}
                                 </a>
                                 @endif
+                            </div>
+                            
+                            <div>&nbsp;</div>
+                            <div class="col-md-8 offset-md-4">
+                                <a href="{{ url('/redirect') }}" class="btn btn-primary">Login With Linkedin</a>
                             </div>
                         </div>
                     </form>

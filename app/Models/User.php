@@ -2,14 +2,16 @@
 
 namespace App\Models;
 
+use Laravel\Passport\HasApiTokens;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Models\Job;
 
+
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use Notifiable;
+    use Notifiable, HasApiTokens;
 
     /**
      * The attributes that are mass assignable.
@@ -17,7 +19,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'is_employer',
+        'name', 'email', 'password', 'is_employer', 'linkedin_id', 'summary', 'phone', 'linkedin_id', 'linkedin_name', 'linkedin_token',
     ];
 
     /**
@@ -63,5 +65,12 @@ class User extends Authenticatable implements MustVerifyEmail
     public function profiles()
     {
         return $this->hasOne(Profile::class);
+    }
+    //apply jobs
+    public function applyJobs()
+    {
+        return $this->belongsToMany(Job::class, 'user_applied_jobs')
+            ->withTimestamps()
+            ->orderBy('user_applied_jobs.created_at', 'desc');
     }
 }

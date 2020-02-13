@@ -7,7 +7,7 @@
             Profile
         </div>
         <ul class="list-group list-group-flush">
-            <li class="list-group-item">Business name <br><input type="text" value="{{$u['name']}}" name="ename" class="form-control"></li>
+            <li class="list-group-item"><span style="color: red;font-size:20px;">*</span> Business name <br><input type="text" value="{{$u['name']}}" name="ename" class="form-control"></li>
             <li class="list-group-item">Introduction <br><textarea name="eintro" id="" cols="50" rows="10">{{$u['introduction']}}</textarea></li>
             <li class="list-group-item">
                 Classification<br>
@@ -56,7 +56,7 @@
                 <br><input name="enumber" type="text" class="form-control" value="{{$u['phone']}}">
             </li>
             <li class="list-group-item"><input name="ereceive" type="checkbox" value="1">send a copy to my mail when I receive a new application</li>
-            <li class="list-group-item"><input type="file" name="logo">choose a logo</li>
+            <li class="list-group-item"><span style="color:red;margin-right:10px;font-size:20px;">*</span><input type="file" name="logo">choose a logo</li>
             <li class="list-group-item">
                 <div style="border:solid 1px grey;width:200px; height:200px;"><img style="width:200px; height:200px;" src="{{url('uploads/images/filename.jpg')}}" alt="logo"></div>
             </li>

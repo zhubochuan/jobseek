@@ -27,7 +27,15 @@
                             </li>
                         </ul>
                         <!----->
-                        @include('sections.save')
+                        <div>
+                            <div style="float: left;">
+                                @include('sections.save')
+                            </div>
+
+                            <div style="float: left;">
+                                @include('sections.share')
+                            </div>
+                        </div>
                     </div>
                     @endforeach
                 </div>

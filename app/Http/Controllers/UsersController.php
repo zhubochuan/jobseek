@@ -1,12 +1,15 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Profile;
 use App\Models\Experience;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Apply;
 use App\Models\Job;
 use Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Request as FacadesRequest;
 
 class UsersController extends Controller
@@ -20,6 +23,10 @@ class UsersController extends Controller
     //edit profile on emploer page and store
     public function profile(Request $request)
     {
+        $this->validate($request, [
+            'logo' => 'required',
+            'ename' => 'required'
+        ]);
 
         Auth::user()->profiles()->create([
             'logo' => $request->file('logo')->storeAs('images', 'filename.jpg', 'public_uploads'),
@@ -126,7 +133,7 @@ class UsersController extends Controller
     }
 
     //maybe need to change, pass users data here
-    //profile  page
+    //show profile  page
     public function show()  //this is employer homepage
     {
 
@@ -173,4 +180,46 @@ class UsersController extends Controller
     public function deleteJob(Job $job)
     {
     }
+
+    //view applicants
+    public function viewApply()
+    {
+        $postjobid = Auth::user()->jobs()->pluck('id');  // step: 1 which jobs(id) user has post
+
+        //step 2: who apply these jobs
+        $applyjob = DB::table('user_applied_jobs')->whereIn('job_id', $postjobid)->get();  //jobs
+
+        $user = Auth::user();
+        $job = Job::all();
+        $uid;
+        $jid;
+        $aid;
+
+        foreach ($applyjob as $a) {
+            $uid = $a->user_id;
+            $jid = $a->job_id;
+            $aid = $a->id;
+        }
+
+        //find user
+        $a_user = User::find($uid);
+        //find job
+        $a_job = Job::find($jid);
+
+
+        return view('users.whoApply', compact('aid', 'a_user', 'a_job'));
+    }
+    //view applicants detail
+    public function applierDetail($uid, $jid, $aid) //id belongs to a_user
+    {
+        //aid
+        $user = User::find($uid);
+        $job = Job::find($jid);
+        $app = DB::table('user_applied_jobs')->where('id', $aid)->get();
+        $exp = $user->experience()->get();
+        return view('users._applicant', compact('user', 'job', 'app', 'exp'));
+    }
+
+
+
 }

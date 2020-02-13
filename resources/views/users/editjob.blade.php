@@ -19,7 +19,8 @@
                 Posted:{{$jobs['created_at']}}<br>
                 <img class="icon" src="{{url('images/pin.png')}}" alt="">{{$jobs['city or suburb']}}<br>
                 Classification: {{$jobs['classification']}}<br>
-                <span class="badge-primary">{{$jobs['type']}}</span>
+                <span class="badge-primary">{{$jobs['type']}}</span><br>
+                <span>Closing date: {{$jobs['closing date']}}</span>
                 <hr>
                 
                 <a href="{{ route('goedit',['id'=>$jobs['id']]) }}" type="button"><button class="btn btn-success">Edit</button></a>

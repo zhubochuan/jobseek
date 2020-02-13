@@ -27,6 +27,7 @@
     <div style="height:100%;min-height:300px; width: 60%;background-color:white;float:left;">
         <!--loading different pages, let other pages extends this pages--->
         <!--Employer home page---->
+        
         <!---profile---->
         @include('users.profile')
 

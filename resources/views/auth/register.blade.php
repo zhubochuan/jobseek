@@ -81,6 +81,10 @@
                             </div>
                         </div>
                         <a style="padding-left:50%;" href="{{route('login')}}">Already have an account? Please Log In</a>
+                        <div>&nbsp;</div>
+                        <div class="col-md-8 offset-md-4">
+                            <a href="{{ url('/redirect') }}" class="btn btn-primary">Signup With Linkedin</a>
+                        </div>
                     </form>
                 </div>
             </div>

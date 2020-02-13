@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Job;
 use App\Models\Classification;
+use App\Mail\applyMail;
+use App\Models\User;
 use App\Models\Type;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 
 class StaticPagesController extends Controller
@@ -16,7 +19,7 @@ class StaticPagesController extends Controller
 
     public function home(Job $job, Request $request)  //list 5 latest jobs on home page
     {
-      
+
 
         //Every time back to the home page, reset selected classification history and type history
         $classification = new Classification;
@@ -164,7 +167,7 @@ class StaticPagesController extends Controller
         return view('static_pages/job', compact('jobs', 'cjob', 'tjob'));
     }
 
-    //save jobs
+    //seeker save jobs
     public function save($id, Request $request)
     {
 
@@ -179,6 +182,83 @@ class StaticPagesController extends Controller
 
         return [];
     }
+
+    //seeker apply jobs
+    //CV, phone number need to be attach here, or in other way
+    public function apply($id, Request $request)
+    {
+
+        $whoid;
+        $who_mail;
+        $who_name;
+        $title;
+        $applyjob = Job::Where('id', $id)
+            ->get();
+        $user = $request->user();
+        if ($user->applyJobs()->find($id)) {
+            return redirect()->back();
+        }
+
+        $user->applyJobs()->attach($applyjob);
+
+        //send email to employer with application information
+        $name = $user->name;
+        $from_mail = $user->email;
+
+        foreach ($applyjob as $a) {
+            $whoid = $a->user_id; //who post this job , get job id
+            $title=$a->title;
+        }
+        $who = User::find($whoid)->get(); //who post job, get email 
+        foreach($who as $w){
+           $who_mail= $w->email;
+           $who_name=$w->name;
+        }
+
+
+        $data = array('applier'=>$name,'title'=>$title);
+        Mail::send('Mail.fromApplier', $data, function ($message) use ($who_mail,$name,$who_name,$from_mail){
+            $message->to($who_mail, $who_name)->subject('You post jobs has new applicant');
+            $message->from($from_mail, $name);
+        });
+
+        //end send email
+        session()->flash('success', 'Job application has been sent.');
+        return redirect()->back();
+    }
+
+
+   
+
+
+    //apply page
+    public function applypage($id)
+    {
+        $job = Job::Where('id', $id)
+            ->get();
+
+        return view('seeker.applyPage', ['jobs' => $job]);
+    }
+    //applied jobs
+    public function applied(Request $request)
+    {
+        $jobs = $request->user()->applyJobs()->paginate(16);
+
+        return view('seeker.appliedJob', ['jobs' => $jobs]);
+    }
+
+    //remove apply
+    public function disapply($id, Request $request)
+    {
+        $ajob = Job::Where('id', $id)
+            ->get();
+        $user = $request->user();
+        $user->applyJobs()->detach($ajob);
+        session()->flash('success', 'Job application has been removed.');
+
+        return redirect()->back();
+    }
+
     //remove jobs
     public function dissave($id, Request $request)
     {
