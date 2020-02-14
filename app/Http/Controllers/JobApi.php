@@ -35,6 +35,7 @@ class JobApi extends Controller
     //update
     public function jobUpdate(Request $request, $id)
     {
+        
         $job = Job::find($id);
         if (is_null($job)) {
             return response()->json('Record not found!', 404);

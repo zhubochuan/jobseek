@@ -19,7 +19,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'is_employer', 'linkedin_id', 'summary', 'phone', 'linkedin_id', 'linkedin_name', 'linkedin_token',
+        'name', 'email', 'password', 'is_employer', 'linkedin_id', 'summary', 'phone', 'linkedin_id', 'linkedin_name', 'linkedin_token','api_token',
     ];
 
     /**

@@ -18,9 +18,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::group(['middleware' => 'auth:api'], function () {
-    Route::get('jobs', 'JobApi@job');
-    Route::get('jobs/{id}', 'JobApi@jobByid');
-    Route::post('jobs', 'JobApi@jobSave');
-    Route::put('jobs/{id}', 'JobApi@jobUpdate');
-    Route::delete('jobs/{id}', 'JobApi@jobDelete');
 });
+
+Route::get('jobs/{id}', 'JobApi@jobByid');
+Route::put('jobs/{id}', 'JobApi@jobUpdate');
+Route::delete('jobs/{id}', 'JobApi@jobDelete');
+Route::get('jobs', 'JobApi@job');
+Route::post('jobs', 'JobApi@jobSave');
