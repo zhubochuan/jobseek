@@ -23,7 +23,7 @@
             </div>
             <div class="col2">
                 <h2>Job Detail</h2>
-                <div><img class="logo" src="" alt="company logo"></div>
+                <div><img class="logo" src="{{url('uploads/images/filename.jpg')}}" alt="company logo"></div>
                 Posted:{{$job['created_at']}}<br>
                 <img class="icon" src="{{url('images/pin.png')}}" alt="">{{$job['city or suburb']}}<br>
                 Classification: {{$job['classification']}}<br>
