@@ -32,7 +32,7 @@ return [
     'linkedin' => [
         'client_id' => '86yv0ifg73hmht',
         'client_secret' => 'ASKHkDuAnpyj5TXy',
-        'redirect' => 'https://13.58.100.196//callback',
+        'redirect' => 'https://13.58.100.196/callback',
         
     ],
 
