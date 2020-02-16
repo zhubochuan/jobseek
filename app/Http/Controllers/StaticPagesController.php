@@ -217,7 +217,7 @@ class StaticPagesController extends Controller
 
 
         $data = array('applier'=>$name,'title'=>$title);
-        Mail::send('Mail.fromApplier', $data, function ($message) use ($who_mail,$name,$who_name,$from_mail){
+        Mail::send('mail.fromApplier', $data, function ($message) use ($who_mail,$name,$who_name,$from_mail){
             $message->to($who_mail, $who_name)->subject('You post jobs has new applicant');
             $message->from($from_mail, $name);
         });

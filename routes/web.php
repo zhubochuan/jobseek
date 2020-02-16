@@ -37,7 +37,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::delete('jobs/{id}/removeApply', 'StaticPagesController@disapply')->name('disapply'); //disapply
 });
 
-Auth::routes(['verify' => true]);
+Auth::routes(['verify' => true]);  //verify email
 
 //users
 Route::resource('users', 'UsersController');
