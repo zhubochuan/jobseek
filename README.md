@@ -7,7 +7,7 @@
 <a href="#job">4. Job</a><br>
 <a href="#user">5. User</a><br>
 <a href="#linkedin">6. LinkedIn login/signup and share</a><br>
-<a href="#api">7. API</a>
+<a href="#api">7. API</a> <br>
 <a href="#other">8. Other</a>
 <p>-------------------------------------------------</p>
 <h3 id="intro">Introduction</h3>
