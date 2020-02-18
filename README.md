@@ -4,7 +4,7 @@
 <a href="#intro">1. Introduction</a><br>
 <a href="#guest">2. Guest page</a><br>
 <a href="#auth">3. Authentication</a><br>
-<a href="#job">4. Job</a><br>
+<a href="#job">4. Job/Search</a><br>
 <a href="#user">5. User</a><br>
 <a href="#linkedin">6. LinkedIn login/signup and share</a><br>
 <a href="#api">7. API</a> <br>
@@ -43,9 +43,10 @@
 
 <p>-------------------------------------------------------</p>
 
-<h3 id="job">Job</h3>
+<h3 id="job">Job/search</h3>
 <p>all users can view 5 latest jobs on home page, and can view all jobs via "job" link on nav bar. After click the job title, job detail page will show.</p>
 <p>In each job card, there are 3 buttons(display only verify account email),save, share and apply. users can save job, all saved jobs will be recorded and users can check them. share button means users can share any job to linkedin acitivity, but this function only support linkedin user. apply button allow seekers apply job. after apply the job, a noticeable email will send to employer.</p>
+<p>Search: you can find a search bar at top of the page, enter any job and search it. More, you can search by classification or type.</p>
 <p>-------------------------------------------------</p>
 <p><h3 id="linkedin">user can login, signup with linkedin account, and share post to linkedin activity. But linkedin user's email is un-verifyied in this app. sorry.</h3></p>
 
